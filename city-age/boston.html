@@ -8,10 +8,8 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
     <style>
-        /* Ensure the map container fills the screen */
-        body { margin: 0; padding: 0; }
+        body { margin: 0; padding: 0}
         #map { position: absolute; top: 0; bottom: 0; width: 100%; }
-        /* Styles for the modal and close button */
         .modal {
             display: none;
             position: fixed;
@@ -21,13 +19,14 @@
             z-index: 1;
             width: 80%;
             max-width: 400px;
-            background-color: #ffffff;
-            padding-top: 20px;
-            border: 1px solid #888;
+            background-color: #333;
+            color: #fff;
+            padding-top: 0;
+            border: 1px solid #444;
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         }
         .modal-content {
-            padding: 20px;
+            padding: 10px;
         }
         .close-button {
             color: #aaa;
@@ -37,9 +36,59 @@
         }
         .close-button:hover,
         .close-button:focus {
-            color: black;
+            color: white;
             text-decoration: none;
             cursor: pointer;
+        }
+        #correction-form input,
+        #correction-form button {
+            box-sizing: border-box;
+            width: 90%;  /* Adjusted from 100% to 90% */
+            padding: 10px;
+            margin: 5px 5%;  /* Added this line to center the fields and button with 5% margin on left and right */
+            border: none;
+            border-radius: 5px;
+        }
+        #correction-form button {
+            background-color: #555;
+            color: #fff;
+            cursor: pointer;
+        }
+        #correction-form button:hover {
+            background-color: #777;
+        }
+        .mapboxgl-popup {
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+        }
+        .mapboxgl-popup-content {
+            padding: 1px;
+        }
+        .mapboxgl-popup-close-button {
+            color: #fff; /* Sets the color of the close button to white */
+        }
+        .popup-content {
+            background-color: #333;
+            color: #dddddd;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 1px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        }
+        .popup-content a {
+            text-decoration: underline;
+            cursor: pointer;
+            color: #9b90ff;  /* Sets the color of the clickable text to white */
+        }
+        #legend {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1;
+            background-color: rgb(158, 158, 158);
+            border: 1px solid #aaa;
+            padding: 10px;
         }
     </style>
 </head>
@@ -47,11 +96,15 @@
 
 <div id='map'></div>  <!-- Map Container -->
 
+<!-- Legend -->
+<div id="legend">
+    <img src="https://api.platform.geosemantica.ru/tergum/static/public/legends/legend_spb.svg" alt="Legend">
+</div>
+
 <!-- Modal -->
 <div id="correction-modal" class="modal">
     <div class="modal-content">
         <span class="close-button" onclick="document.getElementById('correction-modal').style.display='none'">&times;</span>
-        <h2>You can correct or fill in the data</h2>
         <form id="correction-form">
             <input type="text" name="street" placeholder="Street">
             <input type="text" name="house" placeholder="House">
@@ -74,13 +127,23 @@
     function showCorrectionModal(feature) {
         document.getElementById('correction-modal').style.display = 'block';
 
+        // Pre-fill form fields with existing values if they exist
+        document.getElementsByName('street')[0].value = feature.properties.street || '';
+        document.getElementsByName('house')[0].value = feature.properties.house || '';
+        document.getElementsByName('year_of_built')[0].value = feature.properties.yr_built || '';
+
         // Set up form submission handler
         document.getElementById('correction-form').addEventListener('submit', function (event) {
             event.preventDefault();
             var formData = new FormData(event.target);
             formData.append('osm_id', feature.properties.osm_id);
 
-            fetch('https://script.google.com/macros/s/AKfycbwPV6llIKjCRWRU4a9pFAyI5Q97GYdj3e2XU4za6myuP6Rmn8ddLwbLqkkvlWEJtZ6g/exec', {  // Replace with your web app URL
+            // Get the current date and time in ISO string format, which is in UTC
+            var now = new Date().toISOString();
+            // Append the datetime to formData
+            formData.append('datetime_utc', now);
+
+            fetch('https://script.google.com/macros/s/AKfycbxRqlo8KThgq8thsljWb0wW7HKBRScLLlZBav20pzi_jOpWNuqU7tOLwlheSu81CApw/exec', {  
                 method: 'POST',
                 body: formData
             })
@@ -99,7 +162,7 @@
         var layers = ['boston-1', 'boston-2', 'boston-3', 'boston-4', 'boston-5', 'boston-6'];
 
         map.on('click', function (e) {
-            var popupContent = '';
+            var popupContent = '<div class="popup-content">';  // Start popup content with new class
             var foundFeature = false;
             var feature;
 
@@ -111,23 +174,25 @@
                     foundFeature = true;
                     feature = features[0];
 
-                    var displayNameMap = {
-                        'town': 'Area',
-                        'street': 'Street',
-                        'house': 'House',
-                        'yr_built': 'Year of built'
-                    };
+                    var displayNameMap = [
+                        { property: 'town', label: 'Area' },
+                        { property: 'street', label: 'Street' },
+                        { property: 'house', label: 'House' },
+                        { property: 'yr_built', label: 'Year of built' }
+                    ];
 
-                    for (var property in feature.properties) {
-                        if (displayNameMap[property]) {
-                            popupContent += '<div><strong>' + displayNameMap[property] + ':</strong> ' + feature.properties[property] + '</div>';
+                    displayNameMap.forEach(function (item) {
+                        if (feature.properties[item.property]) {
+                            popupContent += '<div><strong>' + item.label + ':</strong> ' + feature.properties[item.property] + '</div>';
                         }
-                    }
+                    });
 
                     // Add clickable text to the popup content
-                    popupContent += `<div onclick='showCorrectionModal(${JSON.stringify(feature)})'><a href="#" style="text-decoration: underline; cursor: pointer;">You can correct or fill in the data</a></div>`;
+                    popupContent += `<div onclick='showCorrectionModal(${JSON.stringify(feature)})'><a href="#">You can correct or fill in the data</a></div>`;
                 }
             }
+
+            popupContent += '</div>';  // End popup content
 
             if (foundFeature) {
                 var popup = new mapboxgl.Popup()
@@ -137,6 +202,7 @@
             }
         });
     });
+
 </script>
 
 </body>
