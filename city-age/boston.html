@@ -11,11 +11,55 @@
         /* Ensure the map container fills the screen */
         body { margin: 0; padding: 0; }
         #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+        /* Styles for the modal and close button */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            width: 80%;
+            max-width: 400px;
+            background-color: #ffffff;
+            padding-top: 20px;
+            border: 1px solid #888;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        }
+        .modal-content {
+            padding: 20px;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
 <div id='map'></div>  <!-- Map Container -->
+
+<!-- Modal -->
+<div id="correction-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" onclick="document.getElementById('correction-modal').style.display='none'">&times;</span>
+        <h2>You can correct or fill in the data</h2>
+        <form id="correction-form">
+            <input type="text" name="street" placeholder="Street">
+            <input type="text" name="house" placeholder="House">
+            <input type="number" name="year_of_built" placeholder="Year of Built">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
 
 <script>
     mapboxgl.accessToken = 'pk.eyJ1Ijoib3NjZW45MCIsImEiOiJjbGt3a2NhaTQxYm5zM2NwcDgxaDIzajRyIn0.8an0vyxbWl3yZAQMnSg_Mg';  // Replace with your Mapbox access token
@@ -26,12 +70,38 @@
         zoom: 13  // Initial zoom level
     });
 
+    // Function to show the correction modal
+    function showCorrectionModal(feature) {
+        document.getElementById('correction-modal').style.display = 'block';
+
+        // Set up form submission handler
+        document.getElementById('correction-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var formData = new FormData(event.target);
+            formData.append('osm_id', feature.properties.osm_id);
+
+            fetch('https://script.google.com/macros/s/AKfycbwPV6llIKjCRWRU4a9pFAyI5Q97GYdj3e2XU4za6myuP6Rmn8ddLwbLqkkvlWEJtZ6g/exec', {  // Replace with your web app URL
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Correction submitted successfully!');
+                document.getElementById('correction-modal').style.display='none';  // Close the modal
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    }
+
     map.on('load', function () {
         var layers = ['boston-1', 'boston-2', 'boston-3', 'boston-4', 'boston-5', 'boston-6'];
 
         map.on('click', function (e) {
             var popupContent = '';
             var foundFeature = false;
+            var feature;
 
             for (var i = 0; i < layers.length; i++) {
                 var layer = layers[i];
@@ -39,7 +109,7 @@
 
                 if (features.length) {
                     foundFeature = true;
-                    var feature = features[0];
+                    feature = features[0];
 
                     var displayNameMap = {
                         'town': 'Area',
@@ -53,16 +123,9 @@
                             popupContent += '<div><strong>' + displayNameMap[property] + ':</strong> ' + feature.properties[property] + '</div>';
                         }
                     }
-                    
-                    // Add form to the popup content
-                    popupContent += `
-                        <form id="correction-form">
-                            <input type="text" name="street" placeholder="Street" required>
-                            <input type="text" name="house" placeholder="House" required>
-                            <input type="number" name="year_of_built" placeholder="Year of Built" required>
-                            <button type="submit">Submit</button>
-                        </form>
-                    `;
+
+                    // Add clickable text to the popup content
+                    popupContent += `<div onclick='showCorrectionModal(${JSON.stringify(feature)})'><a href="#" style="text-decoration: underline; cursor: pointer;">You can correct or fill in the data</a></div>`;
                 }
             }
 
@@ -71,26 +134,6 @@
                     .setLngLat(e.lngLat)
                     .setHTML(popupContent)
                     .addTo(map);
-
-                // Set up form submission handler
-                document.getElementById('correction-form').addEventListener('submit', function (event) {
-                    event.preventDefault();
-                    var formData = new FormData(event.target);
-                    formData.append('osm_id', feature.properties.osm_id);  // Append the osm_id to the form data
-                    
-                    fetch('https://script.google.com/macros/s/AKfycbwPV6llIKjCRWRU4a9pFAyI5Q97GYdj3e2XU4za6myuP6Rmn8ddLwbLqkkvlWEJtZ6g/exec', {  // Replace with your web app URL
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert('Correction submitted successfully!');
-                        popup.remove();
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                });
             }
         });
     });
