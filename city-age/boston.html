@@ -1,11 +1,100 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your New Page Title</title>
+    <title>Boston</title>
+    <!-- Include Mapbox GL JS -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        /* Ensure the map container fills the screen */
+        body { margin: 0; padding: 0; }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Your New Page</h1>
-    <!-- Your content goes here -->
+
+<div id='map'></div>  <!-- Map Container -->
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoib3NjZW45MCIsImEiOiJjbGt3a2NhaTQxYm5zM2NwcDgxaDIzajRyIn0.8an0vyxbWl3yZAQMnSg_Mg';  // Replace with your Mapbox access token
+    var map = new mapboxgl.Map({
+        container: 'map',  // Map container ID
+        style: 'mapbox://styles/oscen90/clodhcvef000n01o5754ndns9',  // Map style URL
+        center: [-71.051, 42.35],  // Initial map center [longitude, latitude] 
+        zoom: 13  // Initial zoom level
+    });
+
+    map.on('load', function () {
+        var layers = ['boston-1', 'boston-2', 'boston-3', 'boston-4', 'boston-5', 'boston-6'];
+
+        map.on('click', function (e) {
+            var popupContent = '';
+            var foundFeature = false;
+
+            for (var i = 0; i < layers.length; i++) {
+                var layer = layers[i];
+                var features = map.queryRenderedFeatures(e.point, { layers: [layer] });
+
+                if (features.length) {
+                    foundFeature = true;
+                    var feature = features[0];
+
+                    var displayNameMap = {
+                        'town': 'Area',
+                        'street': 'Street',
+                        'house': 'House',
+                        'yr_built': 'Year of built'
+                    };
+
+                    for (var property in feature.properties) {
+                        if (displayNameMap[property]) {
+                            popupContent += '<div><strong>' + displayNameMap[property] + ':</strong> ' + feature.properties[property] + '</div>';
+                        }
+                    }
+                    
+                    // Add form to the popup content
+                    popupContent += `
+                        <form id="correction-form">
+                            <input type="text" name="street" placeholder="Street" required>
+                            <input type="text" name="house" placeholder="House" required>
+                            <input type="number" name="year_of_built" placeholder="Year of Built" required>
+                            <button type="submit">Submit</button>
+                        </form>
+                    `;
+                }
+            }
+
+            if (foundFeature) {
+                var popup = new mapboxgl.Popup()
+                    .setLngLat(e.lngLat)
+                    .setHTML(popupContent)
+                    .addTo(map);
+
+                // Set up form submission handler
+                document.getElementById('correction-form').addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    var formData = new FormData(event.target);
+                    formData.append('osm_id', feature.properties.osm_id);  // Append the osm_id to the form data
+                    
+                    fetch('https://script.google.com/macros/s/AKfycby1kixxW0FQcuzFHoLHlbDy0-Iu7iqoxOwxaV__HCU4wAkYRLRfUC_n4YK7mmEW73h3/exec', {  // Replace with your web app URL
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert('Correction submitted successfully!');
+                        popup.remove();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
