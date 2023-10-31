@@ -78,7 +78,7 @@
                     var formData = new FormData(event.target);
                     formData.append('osm_id', feature.properties.osm_id);  // Append the osm_id to the form data
                     
-                    fetch('https://script.google.com/macros/s/AKfycby1kixxW0FQcuzFHoLHlbDy0-Iu7iqoxOwxaV__HCU4wAkYRLRfUC_n4YK7mmEW73h3/exec', {  // Replace with your web app URL
+                    fetch('https://script.google.com/macros/s/AKfycbwPV6llIKjCRWRU4a9pFAyI5Q97GYdj3e2XU4za6myuP6Rmn8ddLwbLqkkvlWEJtZ6g/exec', {  // Replace with your web app URL
                         method: 'POST',
                         body: formData
                     })
