@@ -17,12 +17,12 @@
             </ul>
         </nav>
         <div class="logo">
-            <img src="images/logo.png" alt="logo">
+            <img src="../images/logo.png" alt="logo">
         </div>
         <div class="social-links">
             <ul>
-                <li><a href="mailto:ilya@skvortsov.one"><img src="images/email-icon.png" alt="Email"></a></li>
-                <li><a href="https://www.linkedin.com/in/sk-il/"><img src="images/linkedin-icon.png" alt="LinkedIn"></a></li>
+                <li><a href="mailto:ilya@skvortsov.one"><img src="../images/email-icon.png" alt="Email"></a></li>
+                <li><a href="https://www.linkedin.com/in/sk-il/"><img src="../images/linkedin-icon.png" alt="LinkedIn"></a></li>
             </ul>
         </div>
     </header>
@@ -36,12 +36,12 @@
             <p>Another approach is to explore the vast ocean of <a href="https://boardgamegeek.com/browse/boardgame">boardgamegeek.com</a>, sifting through their ranked lists. This option has the advantage of being based on a wider pool of opinions, but it has its limitations. The filtering options are somewhat restricted; you can sort games by type (like Strategy or Family) or by category (such as Horror, Farming, Adventure), but it's challenging to filter by the number of players or game complexity simultaneously.</p>
             <p>For a Data Analyst, this is not just a problem - it's an opportunity.</p>
             <p>Imagine a dashboard that allows you to select your ideal board game based on all your specific criteria. You want a game for 6 players, with medium complexity? Just input these requirements, and voilà! A list of games tailored just for you, combining the wisdom of the crowd with the precision of data analytics.</p>
-            <img src="images/portfolio/how_to_choose_boardgame/data_boardgame.png" alt="analytics-plays-boardgame">
+            <img src="../images/portfolio/how_to_choose_boardgame/data_boardgame.png" alt="analytics-plays-boardgame">
             <h2>Step 1: Gathering Data</h2>
             <p>Our quest to find the perfect board game begins with gathering data from Board Game Geek. Although the site <a href="https://boardgamegeek.com/wiki/page/Data_Mining#">has an API</a>, I chose to scrape its web version for a more comprehensive dataset.</p>
             <p>We start with BGG's massive list of about 150,000 games. To ensure we're working with quality data, I focused on the 25,000 games that have ratings. To further refine the data for accuracy, I selected around 6,000 games that meet specific criteria: each game has at least 50 reviews, was released after 1934 (Hello, Monopoly!), and has complete information on important aspects like complexity and the number of players.</p>
             <p><i>For those who are curious about the technical aspects, you can find the code for this data scraping, the initial processing and cleaning of the data, as well as the final dataset on <a href="https://github.com/sk-il/garage/tree/main/01_boardgames/data">my GitHub page.</a></i></p>
-            <img src="images/portfolio/how_to_choose_boardgame/boardgame_metrics.jpg" alt="boardgame-metrics">
+            <img src="../images/portfolio/how_to_choose_boardgame/boardgame_metrics.jpg" alt="boardgame-metrics">
             <h2>Step 2: Data Exploration</h2>
             <p>In our dataset, we have several key metrics:</p>
             <ul class="article-list">
@@ -55,25 +55,25 @@
             </ul>
             <p>Our task is to determine the most useful metric for finding the best board game. We'll explore their distributions and seek insights.</p>
             <p>Now, the critical question: Which metric best evaluates a game's quality? Should we lean on the site's <b>Geek Rating</b>, or is the <b>Average Rating</b> more reliable? To unravel this, we'll compare how these ratings relate to each other.</p>
-            <img src="images/portfolio/how_to_choose_boardgame/01_top_by_ratings.png" alt="01-top-by-ratings">
+            <img src="../images/portfolio/how_to_choose_boardgame/01_top_by_ratings.png" alt="01-top-by-ratings">
             <p class="img-caption">The top 10 games for the two metrics are completely different and all the games with the highest Average Ratings have a small number of ratings.</p>
-            <img src="images/portfolio/how_to_choose_boardgame/02_geek_vs_average_r.png" alt="02-geek-vs-average-r">
+            <img src="../images/portfolio/how_to_choose_boardgame/02_geek_vs_average_r.png" alt="02-geek-vs-average-r">
             <p class="img-caption">Games with few ratings consistently show a Geek Rating of 5.5. The Average Rating aligns with the Geek Rating only when there are around 7000 ratings.</p>
             <p>To earn a high <b>Geek Rating</b>, popularity is key. However, many excellent games may not gain popularity due to limited marketing or high costs, leading to fewer owners and ratings. Identifying such hidden gems could be intriguing. But for most players, a game's popularity matters for two reasons: availability, preferably in local shops, and the likelihood of finding others to play with who are familiar with the rules. Therefore, while <b>Geek Rating</b> will be our primary metric, we'll also consider the clean <b>Average Rating</b>  for a comprehensive view.</p>
             <p>Now, let's dive into which metrics best indicate a game's popularity and explore how these metrics are interconnected.</p>
-            <img src="images/portfolio/how_to_choose_boardgame/03_top_by_popularity.png" alt="03-top-by-popularity">
+            <img src="../images/portfolio/how_to_choose_boardgame/03_top_by_popularity.png" alt="03-top-by-popularity">
             <p>We observe that the number of ratings (<b>Users Rated</b>) and the number of owners (<b>Owned</b>) very similar, though ownership figures are higher. Owning a game appears to be a more significant indicator of its popularity than just its rating</p>
             <p>The <b>Total Plays</b> metric places a card games (Dominions, Race for the Galaxy, Magic: The gathering) at the forefront, indicating a genre-specific trend rather than overall popularity. This suggests it's not the most suitable metric for broad comparisons. However, <b>Plays per Month</b> provides a fascinating snapshot of current popular games, making it a valuable metric for understanding real-time trends.</p>
             <p>Based on this analysis, <b>Owned</b> will be our primary metric for assessing popularity, with the other metrics providing additional context.</p>
             <p>So, what about <b>Complexity</b>?</p>
             <p><i>From there, I narrowed the dataset to games with over 300 reviews (4520 games). This threshold was chosen because these games tend to have more reliable Complexity data, which is generally filled out worse than game rating.</i></p>
-            <img src="images/portfolio/how_to_choose_boardgame/04_complexity.png" alt="04-complexity">
-            <img src="images/portfolio/how_to_choose_boardgame/05_complexity_vs_ave.png" alt="05-complexity-vs-ave">
+            <img src="../images/portfolio/how_to_choose_boardgame/04_complexity.png" alt="04-complexity">
+            <img src="../images/portfolio/how_to_choose_boardgame/05_complexity_vs_ave.png" alt="05-complexity-vs-ave">
             <p>We observe a trend where more complex games often receive higher ratings. However, it's important to note that this data comes from the site with a self-explanatory name, it is not a random, independent sample. So, we can't say for sure that this trend is true for entire population.</p>
             <p>Despite this, complexity remains a crucial factor in choosing a game, and it's the only metric we have for gauging this aspect.</p>
             <p>Finally, let's explore the average <b>Complexity</b> and <b>Geek Rating</b> across different game <b>Types</b> to gain further insights.</p>
             <p><i>It's worth noting that a game can fall into multiple types, meaning it can be counted more than once in our analysis. This overlap reflects the multifaceted nature of board games, where a single game might blend elements from various genres or categories.</i></p>
-            <img src="images/portfolio/how_to_choose_boardgame/06_types.png" alt="06-types">
+            <img src="../images/portfolio/how_to_choose_boardgame/06_types.png" alt="06-types">
             <p>It's clear that children's, family, and party games are generally designed to be straightforward and easy to understand. Considering our earlier observation that more complex games tend to receive higher ratings, it's not surprising to see that these types of games usually have lower ratings.</p>
             <p>This underscores the importance of selecting a game type that aligns with our preferences. For instance, a great party game might not rank as high as a strategic game in terms of <b>Geek Rating</b>, largely due to the specific preferences of the BoardGameGeek community.</p>
             <h2>Step 3: Dashboard</h2>
@@ -133,7 +133,7 @@
             <p>It's time to test the dashboard!</p>
             <p>My criteria were: best for 6 players and not too difficult (<b>Complexity</b> below 3.5). The <b>Type</b> of game didn't matter. After setting the filters, I dived into exploring the top ten games listed, except for 'Codenames,' which I already own. After much consideration, I finally chose Heat: Pedal to the Metal, the top of the list that met my criteria.</p>
             <p>To my delight, <s>and much to my wife's satisfaction</s>, the game was in my hands by the evening.</p>
-            <img src="images/portfolio/how_to_choose_boardgame/heat.jpg" alt="heat">
+            <img src="../images/portfolio/how_to_choose_boardgame/heat.jpg" alt="heat">
         </section>
 
     </main>
