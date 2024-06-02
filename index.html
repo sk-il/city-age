@@ -3,9 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>skvortsov.one</title>
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700" rel="stylesheet">
 </head>
 <body>
-    <h1>Hello, World!</h1>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#about-me">About me</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+            </ul>
+        </nav>
+        <div class="logo">
+            <img src="images/logo.png" alt="logo">
+        </div>
+        <div class="social-links">
+            <ul>
+                <li><a href="mailto:ilya@skvortsov.one"><img src="images/email-icon.png" alt="Email"></a></li>
+                <li><a href="https://www.linkedin.com/in/sk-il/"><img src="images/linkedin-icon.png" alt="LinkedIn"></a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+
+        <p id="select-from-me">SELECT * <br>FROM me</p>
+        <section class="about-me" id="about-me">
+
+            <div class="about-me-text">
+                <h2>Hello, World!</h2>
+                <p>I'm a Data Analyst who loves turning numbers into stories. My adventure in the data world is filled with exciting challenges and creative solutions. I'm great with Python and SQL, and I have a special talent for making data look good and easy to understand.</p>
+                <p>In my data journey, I've become an expert at organizing data, making databases work smoothly, and digging deep to find out what the market really needs. I believe that data isn't just numbers – it's a story waiting to be told, and I'm the storyteller.</p>
+                <p>My approach is simple but powerful: make data fun, make it clear, and use it to help businesses grow. I've worked in different industries, always ready to learn and adapt. For me, every data puzzle is a chance to be creative and make a real impact.</p>
+            </div>
+            <div class="about-me-image">
+                <img src="images/profile.png" alt="Profile Picture">
+            </div>
+        </section>
+
+        <section class="tableau-section">
+            <div class='tableauPlaceholder' id='viz1716833501150' style='position: relative'>
+                <noscript>
+                    <a href='https://skvortsov.one/'><img alt='CV ' src='https://public.tableau.com/static/images/CV/CV_17018672146310/CV/1_rss.png' style='border: none' /></a>
+                </noscript>
+                <object class='tableauViz' style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                    <param name='embed_code_version' value='3' />
+                    <param name='site_root' value='' />
+                    <param name='name' value='CV_17018672146310&#47;CV' />
+                    <param name='tabs' value='no' />
+                    <param name='toolbar' value='yes' />
+                    <param name='static_image' value='https://public.tableau.com/static/images/CV/CV_17018672146310/CV/1.png' />
+                    <param name='animate_transition' value='yes' />
+                    <param name='display_static_image' value='yes' />
+                    <param name='display_spinner' value='yes' />
+                    <param name='display_overlay' value='yes' />
+                    <param name='display_count' value='yes' />
+                    <param name='language' value='en-US' />
+                    <param name='filter' value='publish=yes' />
+                </object>
+            </div>
+            <script type='text/javascript'>
+                var divElement = document.getElementById('viz1716833501150');
+                var vizElement = divElement.getElementsByTagName('object')[0];
+                if ( divElement.offsetWidth > 800 ) {
+                    vizElement.style.width='1200px';
+                    vizElement.style.height='827px';
+                } else if ( divElement.offsetWidth > 500 ) {
+                    vizElement.style.width='1200px';
+                    vizElement.style.height='827px';
+                } else {
+                    vizElement.style.width='100%';
+                    vizElement.style.height='727px';
+                }
+                var scriptElement = document.createElement('script');
+                scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+                vizElement.parentNode.insertBefore(scriptElement, vizElement);
+            </script>
+        </section>
+
+        <section id="portfolio">
+            <h2>Portfolio</h2>
+            <p>Projects related to data collection, processing, analysis, and visualization</p>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="img-container"><img src="images/boardgame.png" alt="How to choose a Boardgame"></div>
+                    <h3>How to choose a Boardgame like a Data Analyst</h3>
+                    <p>Collecting data from the boardgamegeek.com, analyzing it and creating a dashboard to help you choose a board game.</p>
+                    <a href="#" class="read-more">Read more</a>
+                </div>
+                <div class="portfolio-item">
+                    <div class="img-container"><img src="images/serbia-data-analysts.png" alt="Data Analysts in Serbia"></div>
+                    <h3>Data Analysts in Serbia</h3>
+                    <p>Research of the evolving employment landscape for Data Analysts in Serbia, focusing on the integration of Russian professionals amid significant migration trends.</p>
+                    <a href="#" class="read-more">Read more</a>
+                </div>
+                <div class="portfolio-item">
+                    <div class="img-container"><img src="images/pulp-fiction.png" alt="Pulp Fiction"></div>
+                    <h3>Pulp Fiction</h3>
+                    <p>Pulp Fiction has 265 uses of the word "fuck" in the 154 minute film. A dashboard that will show their distribution is necessary!</p>
+                    <a href="#" class="read-more">Read more</a>
+                </div>
+                <div class="portfolio-item">
+                    <div class="img-container"><img src="images/spaceflights.png" alt="History of spaceflights"></div>
+                    <h3>History of spaceflights</h3>
+                    <p>If the story of spaceflight had to be told in the shortest possible way, I would do it like this.</p>
+                    <a href="#" class="read-more">Read more</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+    </footer>
 </body>
 </html>

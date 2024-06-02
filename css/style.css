@@ -1,0 +1,161 @@
+/* Reset some basic elements */
+body, h1, h2, h3, p, ul, li, a {  /* Reset margin, padding, list style, text decoration, and box sizing */
+    margin: 0;  /* Remove default margin */
+    padding: 0;  /* Remove default padding */
+    list-style: none;  /* Remove list bullets */
+    text-decoration: none;  /* Remove underline from links */
+    box-sizing: border-box;  /* Include padding and border in element's total width and height */
+}
+
+h2 {
+    font-size: 35px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* Basic styles for body */
+body {  /* Set the font family, text color, and line height for the body */
+    font-family: 'Barlow', sans-serif;  /* Use Barlow font from Google Fonts */
+    color: #333;  /* Set text color to dark gray */
+    line-height: 1.6;  /* Set line height for better readability */
+}
+
+/* Header styles */
+header {  /* Style the header */
+    background: #000;  /* Set background color to black */
+    padding: 0px 40px;  /* Add paddings */
+    display: flex;  /* Use flexbox for layout */
+    justify-content: space-between;  /* Space out items evenly */
+    align-items: center;  /* Align items in the center vertically */
+    position: sticky;  /* Make header stick to the top when scrolling */
+    top: 0;  /* Stick to the top of the page */
+    z-index: 1000;  /* Ensure header is above other elements */
+    height: 60px;
+}
+
+header ul {  /* Style the navigation list */
+    display: flex;  /* Use flexbox for layout */
+    gap: 30px;  /* Space out the list items */
+    color: white;
+}
+
+header a {  /* Style the navigation list */
+    color: white;
+    font-weight: 600;  /* Set the font weight to semi-bold */
+}
+
+header .logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo img {
+    height: 60px;  /* Set the fixed height for the logo */
+    width: auto;   /* Ensure the width scales proportionally */
+    display: block;
+}
+
+.social-links img {  /* Style the navigation list */
+    height: 30px;  /* Set the fixed height for the logo */
+    width: auto;   /* Ensure the width scales proportionally */
+    display: block;
+}
+
+#select-from-me {
+    padding: 30px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0 auto; /* Center the element within the parent */
+    max-width: 1200px;
+    border-style: none none solid none;
+    font-size: 40px; /* Set base font size */
+}
+
+.about-me {
+    padding: 70px 30px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto; /* Center the element within the parent */
+    max-width: 1200px;
+    font-size: 18px
+}
+
+.about-me-text {
+    padding: 30px 10px;
+}
+
+
+.tableau-section {
+    padding: 30px;
+    text-align: center; /* Center the Tableau viz container */
+}
+
+.tableauPlaceholder {
+    margin: 0 auto; /* Center the placeholder */
+    max-width: 100%;
+}
+
+#portfolio {
+    font-size: 20px;
+    text-align: center;
+    padding: 90px 20px;
+    background-color: #efefef;
+}
+
+.portfolio-grid {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+    margin: 70px 50px;
+}
+
+.portfolio-item {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 450px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 16px;
+}
+
+.img-container {
+    height: 200px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.img-container img{
+    height: 100%;
+}
+
+.portfolio-item .read-more {
+    margin-top: auto;
+    padding: 10px 15px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center; /* Center the text within the button */
+}
+
+.portfolio-item .read-more:hover {
+    background-color: #333;
+}
+
+/* Header styles */
+footer {  /* Style the header */
+    background: #000;  /* Set background color to black */
+    height: 60px;
+}
