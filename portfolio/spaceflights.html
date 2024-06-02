@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History of spaceflights</title>
+    <link rel="stylesheet" href="css\style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#about-me">About me</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+            </ul>
+        </nav>
+        <div class="logo">
+            <img src="images/logo.png" alt="logo">
+        </div>
+        <div class="social-links">
+            <ul>
+                <li><a href="mailto:ilya@skvortsov.one"><img src="images/email-icon.png" alt="Email"></a></li>
+                <li><a href="https://www.linkedin.com/in/sk-il/"><img src="images/linkedin-icon.png" alt="LinkedIn"></a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="article">
+            <h1>History of spaceflights</h1>
+            <p><i>If the story of spaceflight had to be told in the shortest possible way, I would do it like this.</i></p>
+            <p>Welcome to the frontier, folks! Imagine a dashboard as your time machine and each data point a story of humanity's leaps into the cosmic unknown. That's what I've created—a place where numbers soar higher than rockets, and each stat tells a tale of triumph and trial.</p>
+            <p>Now, picture this: It's 1957, and the first artificial satellite, Sputnik, breaks free from Earth's embrace, etching a path across the starlit sky. Fast forward to 2023, and the cadence of launches has hit a rhythm so relentless that it’s like the sky itself is dancing. That year alone, the world saw a staggering 223 orbital launch.</p>
+            <p>So, how did I chronicle this astronomical ballet? I crafted a tool, a dashboard pulling data straight from the depths of Wikipedia, sliced and diced by state, orbit, function, and whether it was a tale of success or a lesson in humility. If you're curious about the magic behind the curtain—the code and datasets—are all neatly laid out for you on <a href="https://github.com/sk-il/garage/tree/main/04_spaceflights">my GitHub</a>.</p>
+            <p>This isn't just a tale of numbers and technology; it's a story about pushing boundaries, about a species that looks up and wonders, "What's next?" Every time a rocket pierces the sky, it carries more than satellites or probes; it carries our dreams, our will to explore.</p>
+
+            <div class="tableauPlaceholder" id="viz1715285423044" style="position: relative; margin: auto; width: 1200px;">
+                <noscript>
+                    <a href="#">
+                        <img alt="Spaceflights" src="https://public.tableau.com/static/images/Sp/Spacelaunches_17144616123410/Spaceflights/1_rss.png" style="border: none" />
+                    </a>
+                </noscript>
+                <object class="tableauViz" style="display:none;">
+                    <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
+                    <param name="embed_code_version" value="3" />
+                    <param name="site_root" value="" />
+                    <param name="name" value="Spacelaunches_17144616123410/Spaceflights" />
+                    <param name="tabs" value="no" />
+                    <param name="toolbar" value="yes" />
+                    <param name="static_image" value="https://public.tableau.com/static/images/Sp/Spacelaunches_17144616123410/Spaceflights/1.png" />
+                    <param name="animate_transition" value="yes" />
+                    <param name="display_static_image" value="yes" />
+                    <param name="display_spinner" value="yes" />
+                    <param name="display_overlay" value="yes" />
+                    <param name="display_count" value="yes" />
+                    <param name="language" value="en-US" />
+                    <param name="filter" value="publish=yes" />
+                </object>
+            </div>
+            <script type="text/javascript">
+                var divElement = document.getElementById('viz1715285423044');
+                var vizElement = divElement.getElementsByTagName('object')[0];
+                if (divElement.offsetWidth > 800) {
+                    vizElement.style.width = '1200px';
+                    vizElement.style.height = '827px';
+                } else if (divElement.offsetWidth > 500) {
+                    vizElement.style.width = '1200px';
+                    vizElement.style.height = '827px';
+                } else {
+                    vizElement.style.width = '100%';
+                    vizElement.style.height = '1077px';
+                }
+                var scriptElement = document.createElement('script');
+                scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+                vizElement.parentNode.insertBefore(scriptElement, vizElement);
+            </script>
+
+        </section>
+
+    </main>
+
+    <footer>
+    </footer>
+</body>
+</html>
